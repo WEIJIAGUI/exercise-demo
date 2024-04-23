@@ -39,4 +39,32 @@ function quickSort(arr) {
   right = quickSort(right);
   return [...left, leader, ...right];
 }
-console.log(quickSort(arr));
+
+/**
+ * 标准快排
+ * @param {*} arr
+ */
+function normQuickSort(arr, begin, end) {
+  if (begin >= end - 1) return;
+  let left = begin;
+  let right = end;
+  do {
+    do left++;
+    while (left < right && arr[left] < arr[begin]);
+    do right--;
+    while (right > left && arr[right] > arr[begin]);
+    if (left < right) swap(arr, left, right);
+  } while (left < right);
+  const point = left === right ? right - 1 : right;
+  swap(arr, begin, point);
+  normQuickSort(arr, begin, point);
+  normQuickSort(arr, point + 1, end);
+}
+
+function swap(array, start, end) {
+  let temp = array[start];
+  array[start] = array[end];
+  array[end] = temp;
+}
+normQuickSort(arr, 0, arr.length);
+console.log(arr);
